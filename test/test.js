@@ -110,9 +110,9 @@ describe('GET /:url/:width/:height', function () {
   });
   it('fails if width is too large', function (done) {
     request(app)
-      .get('/http%3A%2F%2Flocalhost:8080%2Ftest.png/1001/100')
+      .get('/http%3A%2F%2Flocalhost:8080%2Ftest.png/100001/100')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(404, 'Expected width to be less than or equal to 1000', done);
+      .expect(404, 'Expected width to be less than or equal to 2048', done);
   });
   it('fails if height is a non-integer', function (done) {
     request(app)
@@ -122,9 +122,9 @@ describe('GET /:url/:width/:height', function () {
   });
   it('fails if height is too large', function (done) {
     request(app)
-      .get('/http%3A%2F%2Flocalhost:8080%2Ftest.png/100/1001')
+      .get('/http%3A%2F%2Flocalhost:8080%2Ftest.png/100/100001')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(404, 'Expected height to be less than or equal to 1000', done);
+      .expect(404, 'Expected height to be less than or equal to 2048', done);
   });
 
   it('fails if the protocol is unsupported', function (done) {
@@ -185,19 +185,19 @@ describe('GET /:url/:width/:height', function () {
     request(app)
       .get('/http%3A%2F%2Flocalhost:8080%2Fcontent-type-invalid/100/100')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, got text/plain', done);
+      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, image/pjpeg, got text/plain', done);
   });
   it('fails if the content type is empty', function (done) {
     request(app)
       .get('/http%3A%2F%2Flocalhost:8080%2Fcontent-type-empty/100/100')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, got ', done);
+      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, image/pjpeg, got ', done);
   });
   it('fails if the content type is missing', function (done) {
     request(app)
       .get('/http%3A%2F%2Flocalhost:8080%2Fcontent-type-missing/100/100')
       .expect('Content-Type', 'text/html; charset=utf-8')
-      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, got ', done);
+      .expect(404, 'Expected content type image/gif, image/jpeg, image/png, image/jpg, image/pjpeg, got ', done);
   });
   it('parses a complex content type', function (done) {
     request(app)
